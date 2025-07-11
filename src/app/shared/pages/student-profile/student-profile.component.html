@@ -1,0 +1,271 @@
+<div class="container mx-auto px-4 py-8">
+  <app-toast></app-toast>
+  <ng-container></ng-container>
+  <ng-content select="[title]"></ng-content>
+  <div class="bg-white shadow-md rounded-lg p-6 max-w-4xl mx-auto">
+    <!-- @if (isLoading()) {
+    <div class="flex justify-center items-center h-60">
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"
+      ></div>
+    </div>
+    } @else if (!placementCellId) {
+    <div class="text-center p-6">
+      <p class="text-lg text-gray-600">
+        No placement cell information available.
+      </p>
+    </div>
+    } @else if (!formReady()) {
+    <div class="flex justify-center items-center h-60">
+      <div class="text-center p-6">
+        <p class="text-lg text-gray-600">Preparing form...</p>
+      </div>
+    </div>
+    } @else { -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold text-gray-800">Placement Cell Profile</h2>
+    </div>
+
+    <!-- @if (profile$ | async; as profile) { -->
+    <form [formGroup]="studentProfileForm" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Basic Information -->
+        <div class="space-y-4">
+          <h3 class="text-lg font-medium text-gray-900 border-b pb-2">Basic Information</h3>
+
+          <!-- Full Name -->
+          <app-shared-input
+            [control]="fullNameControl"
+            label="Full Name"
+            placeholder="Enter full name"
+            [readonly]="!canEdit('fullName')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="fullNameControl"
+            label="Full Name"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- Degree ID -->
+          @if (isEditMode() && canEdit('degree')) {
+            <div class="space-y-2">
+              <app-dropdown-autocomplete-component
+                [options]="placementDegree$ | async"
+                [placeholder]="'Select degree'"
+                title="Degree"
+                [defaultValue]="studentDegree"
+                (selection)="onDegreeSelected($event)"
+              ></app-dropdown-autocomplete-component>
+              <app-validation-errors
+                [control]="degreeControl"
+                label="Degree"
+                [messages]="validationMessages"
+              />
+            </div>
+          } @else {
+            <app-shared-input
+              [control]="degreeControl"
+              label="Degree"
+              placeholder="Enter degree ID"
+              [readonly]="true"
+            ></app-shared-input>
+          }
+          <app-validation-errors
+            [control]="degreeControl"
+            label="Degree ID"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- Enrollment Number -->
+          <app-shared-input
+            [control]="enrollmentNumberControl"
+            label="Enrollment Number"
+            placeholder="Enter enrollment number"
+            [readonly]="!canEdit('enrollmentNumber')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="enrollmentNumberControl"
+            label="Enrollment Number"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- Placement Status -->
+          <div>
+            <p class="block text-sm/6 font-medium text-secondary mb-1">Student Placement Status</p>
+            <label class="inline-flex items-center cursor-pointer">
+              @if (canEdit('placementStatus')) {
+                <input type="checkbox" formControlName="placementStatus" class="sr-only peer" />
+                <div
+                  class="relative w-11 h-6 bg-red-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-success-text-light"
+                ></div>
+              }
+              <span
+                class="ms-3 text-sm font-medium text-danger-text-light"
+                [ngClass]="{ 'text-success-text-dark': placementStatusControl.value }"
+                >{{ placementStatusControl.value ? 'Placed' : 'Not placed' }}</span
+              >
+            </label>
+          </div>
+          <app-validation-errors
+            [control]="placementStatusControl"
+            label="Placement Status"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- Verified by Placement Cell -->
+          <!-- <mat-slide-toggle formControlName="isVerifiedByPlacementCell">Verified</mat-slide-toggle> -->
+          <div>
+            <p class="block text-sm/6 font-medium text-secondary">Student Verification Status</p>
+            <label class="inline-flex items-center cursor-pointer">
+              @if (canEdit('verifiedByPlacementCell')) {
+                <input
+                  type="checkbox"
+                  formControlName="isVerifiedByPlacementCell"
+                  class="sr-only peer"
+                />
+                <div
+                  class="relative w-11 h-6 bg-red-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-success-text-light"
+                ></div>
+              }
+              <span
+                class="ms-3 text-sm font-medium text-danger-text-light"
+                [ngClass]="{ 'text-success-text-dark': isVerifiedByPlacementCellControl.value }"
+                >{{ isVerifiedByPlacementCellControl.value ? 'Verified' : 'Not verified' }}</span
+              >
+            </label>
+          </div>
+          <app-validation-errors
+            [control]="isVerifiedByPlacementCellControl"
+            label="Verified by Placement Cell"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+        </div>
+
+        <div class="space-y-4">
+          <h3 class="text-lg font-medium text-gray-900 border-b pb-2">Educational Information</h3>
+
+          <!-- CGPA -->
+          <app-shared-input
+            [control]="cgpaControl"
+            label="CGPA"
+            placeholder="Enter CGPA"
+            type="number"
+            [readonly]="!canEdit('cgpa')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="cgpaControl"
+            label="CGPA"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- Bachelor's GPA -->
+          <app-shared-input
+            [control]="bachelorsGpaControl"
+            label="Bachelor's GPA"
+            placeholder="Enter Bachelor's GPA"
+            type="number"
+            [readonly]="!canEdit('bachelorsGpa')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="bachelorsGpaControl"
+            label="Bachelor's GPA"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- 10th Percentage -->
+          <app-shared-input
+            [control]="tenthPercentageControl"
+            label="10th Percentage"
+            placeholder="Enter 10th percentage"
+            type="number"
+            [readonly]="!canEdit('tenthPercentage')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="tenthPercentageControl"
+            label="10th Percentage"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- 12th Percentage -->
+          <app-shared-input
+            [control]="twelfthPercentageControl"
+            #twelfthPercentageInput
+            label="12th Percentage"
+            placeholder="Enter 12th percentage"
+            type="number"
+            [readonly]="!canEdit('twelfthPercentage')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="twelfthPercentageControl"
+            label="12th Percentage"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+          @if (diplomaOrTwelfthPercentageError) {
+            <div class="mt-1 text-sm text-red-600">
+              <div>Please ensure either 12th Percentage or Diploma Percentage is provided</div>
+            </div>
+          }
+
+          <!-- Diploma Percentage -->
+          <app-shared-input
+            [control]="diplomaPercentageControl"
+            #diplomaPercentageInput
+            label="Diploma Percentage"
+            placeholder="Enter diploma percentage"
+            type="number"
+            [readonly]="!canEdit('diplomaPercentage')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="diplomaPercentageControl"
+            label="Diploma Percentage"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- Backlogs -->
+          <app-shared-input
+            [control]="backlogsControl"
+            label="Backlogs"
+            placeholder="Enter number of backlogs"
+            type="number"
+            [readonly]="!canEdit('backlogs')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="backlogsControl"
+            label="Backlogs"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+
+          <!-- Live Backlogs -->
+          <app-shared-input
+            [control]="liveBacklogsControl"
+            label="Live Backlogs"
+            placeholder="Enter number of live backlogs"
+            type="number"
+            [readonly]="!canEdit('liveBacklogs')"
+          ></app-shared-input>
+          <app-validation-errors
+            [control]="liveBacklogsControl"
+            label="Live Backlogs"
+            [messages]="validationMessages"
+          ></app-validation-errors>
+        </div>
+      </div>
+      <div class="flex space-x-2">
+        @if (allowEditProfile) {
+          @if (!isEditMode()) {
+            <button type="button" class="btn btn-sm btn-soft btn-primary" (click)="onEdit()">
+              Edit Profile
+            </button>
+          } @else {
+            <button type="button" class="btn btn-sm btn-soft btn-danger" (click)="onCancel()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-sm btn-soft btn-success" (click)="onSubmit()">
+              Save Changes
+            </button>
+          }
+        }
+      </div>
+    </form>
+  </div>
+</div>

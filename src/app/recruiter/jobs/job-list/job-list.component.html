@@ -1,0 +1,137 @@
+<ng-container *ngIf="jobRequests$ | async as data">
+  <div class="stats-container" *ngIf="jobRequestStats$ | async as stats">
+    <!-- Total Job Requests -->
+    <!-- <ng-container *ngIf="jobRequestStats$ | async as stats"> -->
+    <app-stats-card @fadeSlide [title]="'Total Job Requests'">
+      <div card-icon bgColor="bg-info-bg-dark">
+        <i class="fas fa-briefcase text-white"></i>
+      </div>
+      <ng-container body>
+        <p>{{ stats.totalJobRequest }}</p>
+      </ng-container>
+    </app-stats-card>
+    <app-stats-card @fadeSlide [title]="'Total Job Requests'">
+      <div card-icon bgColor="bg-info-bg-dark">
+        <i class="fa-solid fa-chart-pie text-white"></i>
+      </div>
+      <ng-container body>
+        <p>{{ stats.jobRequestSend.total }}</p>
+      </ng-container>
+    </app-stats-card>
+    <app-stats-card @fadeSlide [title]="'Status'">
+      <div card-icon bgColor="bg-info-bg-dark">
+        <i class="fa-solid fa-signal text-white"></i>
+      </div>
+      <ng-container body>
+        @for (status of stats.jobRequestSend.status; track status.status) {
+        <p class="text-xs">
+          {{ status.status }} <span class="text-gray-500">{{ status.count }}</span>
+        </p>
+        }
+      </ng-container>
+    </app-stats-card>
+  </div>
+  <div class="min-w-sm overflow-auto px-3 py-1">
+    <table mat-table [dataSource]="data">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let jobRequest">
+          <p class="font-semibold">
+            {{ jobRequest.title ?? '—' }}
+          </p>
+        </td>
+      </ng-container>
+
+      <!-- Description -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let jobRequest">
+          <p class="max-w-52">
+            {{ jobRequest.description ?? '—' }}
+          </p>
+        </td>
+      </ng-container>
+
+      <!-- Salary -->
+      <ng-container matColumnDef="salary">
+        <th mat-header-cell *matHeaderCellDef>Salary</th>
+        <td mat-cell *matCellDef="let jobRequest">
+          {{ jobRequest.salary ?? '—' | currency : 'INR' : 'symbol' : '4.2-2' }}
+        </td>
+      </ng-container>
+
+      <!-- Job Type -->
+      <ng-container matColumnDef="jobType">
+        <th mat-header-cell *matHeaderCellDef>Job Type</th>
+        <td mat-cell *matCellDef="let jobRequest">
+          <p class="chip bg-gray-200">
+            {{ jobType(jobRequest.jobType) }}
+          </p>
+        </td>
+      </ng-container>
+
+      <!-- Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let jobRequest">
+          <p
+            class="chip uppercase"
+            [ngClass]="{
+              'chip-success': jobRequest.status === 'active',
+              'chip-danger': jobRequest.status !== 'active'
+            }"
+          >
+            {{ jobRequest.status ?? '—' }}
+          </p>
+        </td>
+      </ng-container>
+
+      <!-- Allow AllDegrees -->
+      <ng-container matColumnDef="allowAllDegrees">
+        <th mat-header-cell *matHeaderCellDef>Allow AllDegrees</th>
+        <td mat-cell *matCellDef="let jobRequest">
+          <p
+            class="chip uppercase"
+            [ngClass]="{
+              'chip-success': jobRequest.status,
+              'chip-danger': !jobRequest.status
+            }"
+          >
+            {{ jobRequest.status ?? '—' }}
+          </p>
+        </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let jobRequest">
+          <div class="flex gap-2">
+            <button
+              class="btn btn-solid btn-success btn-sm"
+              (click)="onView(jobRequest.jobRequestId)"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button
+              class="btn btn-solid btn-danger btn-sm"
+              (click)="onDelete(jobRequest.jobRequestId, jobRequest.name)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let jobRequest; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</ng-container>
+<mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  aria-label="Select page"
+  (page)="onPageEvent($event)"
+  [hidePageSize]="true"
+>
+</mat-paginator>

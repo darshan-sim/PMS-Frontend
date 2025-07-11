@@ -1,0 +1,18 @@
+<div class="container mx-auto p-6">
+  @if (hasHead()) {
+    <div class="mb-6">
+      <ng-content select="[head]"></ng-content>
+    </div>
+  }
+
+  <div class="bg-white rounded-lg shadow p-6" [ngClass]="{ 'sm:flex gap-4': hasAside() }">
+    @if (hasAside()) {
+      <aside class="sm:w-3xs">
+        <ng-content select="[aside]"></ng-content>
+      </aside>
+    }
+    <main class="w-full">
+      <ng-content></ng-content>
+    </main>
+  </div>
+</div>

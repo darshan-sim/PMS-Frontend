@@ -1,0 +1,92 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-6">Students Info</h1>
+  <!-- <div class="max-w-7xl m-auto"> -->
+  <div class="ml-auto flex gap-4 justify-end">
+    <button
+      type="button"
+      class="btn btn-sm btn-soft btn-success"
+      (click)="onStudentBatchVerify(true)"
+    >
+      Mark as verify
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm btn-soft btn-danger"
+      (click)="onStudentBatchVerify(false)"
+    >
+      Mark as not verify
+    </button>
+  </div>
+  <table mat-table [dataSource]="studentDataSource" matSort>
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? toggleAllRows() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          [aria-label]="checkboxLabel()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+          [aria-label]="checkboxLabel(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="enrollmentNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Enrollment Number</th>
+      <td mat-cell *matCellDef="let student">{{ student.enrollmentNumber }}</td>
+    </ng-container>
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
+      <td mat-cell *matCellDef="let student">{{ student.fullName }}</td>
+    </ng-container>
+
+    <!-- Degree Column -->
+    <ng-container matColumnDef="degree">
+      <th mat-header-cell *matHeaderCellDef>Degree</th>
+      <td mat-cell *matCellDef="let student">{{ student.degree.name }}</td>
+    </ng-container>
+
+    <!-- Verified -->
+    <ng-container matColumnDef="isVerifiedByPlacementCell">
+      <th mat-header-cell *matHeaderCellDef>Verified</th>
+      <td mat-cell *matCellDef="let student">
+        @if (student.isVerifiedByPlacementCell) {
+          <i class="fa-solid fa-circle-check text-lg m-auto text-success-text-dark"></i>
+        } @else {
+          <i class="fa-solid fa-circle-xmark text-lg m-auto text-danger-text-dark"></i>
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let student">
+        <button
+          type="button"
+          class="btn btn-sm btn-soft btn-success hover:text-success-text-dark hover:bg-success-border-light"
+          [routerLink]="[student.studentId]"
+        >
+          <i class="fa-solid fa-eye"></i>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let student; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    aria-label="Select page"
+    (page)="onPageEvent($event)"
+    [hidePageSize]="true"
+  >
+  </mat-paginator>
+</div>
+<!-- </div> -->

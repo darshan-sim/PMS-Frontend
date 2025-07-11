@@ -1,0 +1,19 @@
+<div class="bg-white overflow-hidden shadow rounded-lg min-w-3xs">
+  <div class="px-4 py-5 sm:p-6">
+    <div class="flex items-center">
+      @if(hasIcon){
+      <div class="flex-shrink-0 bg-blue-500 rounded-md p-3" [ngClass]="iconBgColor">
+        <ng-content select="[card-icon]"></ng-content>
+      </div>
+      }
+      <div class="ml-5 w-0 flex-1">
+        <dt class="text-sm font-medium text-gray-500 truncate">{{ title() }}</dt>
+        <dd class="flex items-baseline">
+          <div class="text-2xl font-semibold text-gray-900">
+            <ng-content select="[body]"></ng-content>
+          </div>
+        </dd>
+      </div>
+    </div>
+  </div>
+</div>

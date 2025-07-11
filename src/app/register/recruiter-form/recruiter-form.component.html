@@ -1,0 +1,57 @@
+<fieldset formGroupName="recruiterForm">
+  <!-- Company Name Input -->
+  <app-shared-input
+    [control]="companyName"
+    label="Company Name"
+    placeholder="Enter your company name"
+  ></app-shared-input>
+  <app-validation-errors
+    [control]="companyName"
+    [messages]="validationMessages"
+    label="Company Name"
+  />
+
+  <!-- Representative Position Input -->
+  <app-shared-input
+    [control]="representativePosition"
+    label="Representative Position"
+    placeholder="Enter representative position"
+  ></app-shared-input>
+  <app-validation-errors
+    [control]="representativePosition"
+    [messages]="validationMessages"
+    label="Representative Position"
+  />
+
+  <!-- Description Input -->
+  <app-shared-input
+    [control]="description"
+    label="Description"
+    placeholder="Enter company description"
+  ></app-shared-input>
+  <app-validation-errors
+    [control]="description"
+    [messages]="validationMessages"
+    label="Description"
+  />
+
+  <!-- Website Input -->
+  <app-shared-input
+    [control]="website"
+    label="Website"
+    placeholder="Enter your website"
+  ></app-shared-input>
+  <app-validation-errors [control]="website" [messages]="validationMessages" label="Website" />
+
+  <!-- Contact email Input -->
+  <app-shared-input
+    [control]="companyEmail"
+    label="Contact email"
+    placeholder="Enter Contact email"
+  ></app-shared-input>
+  <app-validation-errors
+    [control]="companyEmail"
+    [messages]="validationMessages"
+    label="Contact email"
+  />
+</fieldset>

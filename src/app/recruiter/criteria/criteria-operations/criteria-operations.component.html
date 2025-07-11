@@ -1,0 +1,133 @@
+<!-- [@openClose]="isOpen ? 'open' : 'closed'" -->
+<app-toast />
+<form @fadeSlide [formGroup]="eligibilityCriteriaForm" class="space-y-6">
+  <h3 class="text-lg font-medium text-gray-900 border-b pb-2 border-secondary">
+    Create Eligibility
+  </h3>
+  <div>
+    <app-shared-input
+      [control]="nameControl"
+      label="Criteria Name"
+      placeholder="Enter criteria name"
+      [readonly]="!isEditMode"
+    />
+    <app-validation-errors
+      [control]="nameControl"
+      label="Criteria Name"
+      [messages]="validationMessages"
+    />
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <app-shared-input
+        [control]="minCgpaControl"
+        type="number"
+        label="Minimum CGPA"
+        placeholder="e.g. 6.5"
+        [readonly]="!isEditMode"
+      />
+      <app-validation-errors
+        [control]="minCgpaControl"
+        label="Minimum CGPA"
+        [messages]="validationMessages"
+      />
+
+      <app-shared-input
+        [control]="minBachelorsGpaControl"
+        type="number"
+        label="Minimum Bachelor's GPA"
+        placeholder="e.g. 7.0"
+        [readonly]="!isEditMode"
+      />
+      <app-validation-errors
+        [control]="minBachelorsGpaControl"
+        label="Minimum Bachelor's GPA"
+        [messages]="validationMessages"
+      />
+
+      <app-shared-input
+        [control]="minTenthPercentageControl"
+        type="number"
+        label="Minimum 10th %"
+        placeholder="e.g. 70"
+        [readonly]="!isEditMode"
+      />
+      <app-validation-errors
+        [control]="minTenthPercentageControl"
+        label="Minimum 10th %"
+        [messages]="validationMessages"
+      />
+      <app-shared-input
+        [control]="minTwelfthPercentageControl"
+        type="number"
+        label="Minimum 12th %"
+        placeholder="e.g. 75"
+        [readonly]="!isEditMode"
+      />
+      <app-validation-errors
+        [control]="minTwelfthPercentageControl"
+        label="Minimum 12th %"
+        [messages]="validationMessages"
+      />
+    </div>
+    <div>
+      <app-shared-input
+        [control]="minDiplomaPercentageControl"
+        type="number"
+        label="Minimum Diploma %"
+        placeholder="e.g. 65"
+        [readonly]="!isEditMode"
+      />
+      <app-validation-errors
+        [control]="minDiplomaPercentageControl"
+        label="Minimum Diploma %"
+        [messages]="validationMessages"
+      />
+
+      <app-shared-input
+        [control]="maxBacklogsControl"
+        type="number"
+        label="Max Backlogs"
+        placeholder="e.g. 2"
+        [readonly]="!isEditMode"
+      />
+      <app-validation-errors
+        [control]="maxBacklogsControl"
+        label="Max Backlogs"
+        [messages]="validationMessages"
+      />
+
+      <app-shared-input
+        [control]="maxLiveBacklogsControl"
+        type="number"
+        label="Max Live Backlogs"
+        placeholder="e.g. 1"
+        [readonly]="!isEditMode"
+      />
+      <app-validation-errors
+        [control]="maxLiveBacklogsControl"
+        label="Max Live Backlogs"
+        [messages]="validationMessages"
+      />
+    </div>
+  </div>
+  <!-- </div> -->
+  <div class="flex space-x-2">
+    @if (operation() === 'CREATE') {
+    <button type="button" class="btn btn-sm btn-soft btn-success" (click)="onSubmit()">
+      Create criteria
+    </button>
+    } @else if (!isEditMode && operation() !== 'CREATE') {
+    <button type="button" class="btn btn-sm btn-soft btn-primary" (click)="onEdit()">
+      Edit Profile
+    </button>
+    } @else {
+    <button type="button" class="btn btn-sm btn-soft btn-danger" (click)="onCancel()">
+      Cancel
+    </button>
+    <button type="submit" class="btn btn-sm btn-soft btn-success" (click)="onSubmit()">
+      Save Changes
+    </button>
+    }
+  </div>
+</form>

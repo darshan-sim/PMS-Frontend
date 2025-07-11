@@ -1,0 +1,102 @@
+<div @fadeSlide>
+  <ng-container *ngIf="allEligibilityCriteria$ | async as data">
+    <div class="min-w-sm overflow-auto px-3 py-1">
+      <table mat-table [dataSource]="data">
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="font-semibold">{{ eligibilityCriteria.name }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Min CGPA -->
+        <ng-container matColumnDef="minCgpa">
+          <th mat-header-cell *matHeaderCellDef>Min CGPA</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="text-center text-gray-900">{{ eligibilityCriteria.minCgpa ?? '—' }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Min Bachelors GPA -->
+        <ng-container matColumnDef="minBachelorsGpa">
+          <th mat-header-cell *matHeaderCellDef>Min Bachelors GPA</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="text-center text-gray-900">{{ eligibilityCriteria.minBachelorsGpa ?? '—' }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Min 10th Percentage -->
+        <ng-container matColumnDef="minTenthPercentage">
+          <th mat-header-cell *matHeaderCellDef>Min 10th %</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="text-center text-gray-900">{{ eligibilityCriteria.minTenthPercentage ?? '—' }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Min 12th Percentage -->
+        <ng-container matColumnDef="minTwelfthPercentage">
+          <th mat-header-cell *matHeaderCellDef>Min 12th %</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="text-center text-gray-900">{{ eligibilityCriteria.minTwelfthPercentage ?? '—' }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Min Diploma Percentage -->
+        <ng-container matColumnDef="minDiplomaPercentage">
+          <th mat-header-cell *matHeaderCellDef>Min Diploma %</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="text-center text-gray-900">{{ eligibilityCriteria.minDiplomaPercentage ?? '—' }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Max Backlogs -->
+        <ng-container matColumnDef="maxBacklogs">
+          <th mat-header-cell *matHeaderCellDef>Max Backlogs</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="text-center text-gray-900">{{ eligibilityCriteria.maxBacklogs ?? '—' }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Max Live Backlogs -->
+        <ng-container matColumnDef="maxLiveBacklogs">
+          <th mat-header-cell *matHeaderCellDef>Max Live Backlogs</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <p class="text-center text-gray-900">{{ eligibilityCriteria.maxLiveBacklogs ?? '—' }}</p>
+          </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let eligibilityCriteria">
+            <div class="flex gap-2">
+              <button
+                class="btn btn-solid btn-success btn-sm"
+                (click)="onView(eligibilityCriteria.criteriaId)"
+              >
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button
+                class="btn btn-solid btn-danger btn-sm"
+                (click)="onDelete(eligibilityCriteria.criteriaId, eligibilityCriteria.name)"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let eligibilityCriteria; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </ng-container>
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    aria-label="Select page"
+    (page)="onPageEvent($event)"
+    [hidePageSize]="true"
+  >
+  </mat-paginator>
+</div>
