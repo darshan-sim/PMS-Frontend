@@ -1,0 +1,138 @@
+<ng-container *ngIf="jobRequest$ | async as jobRequest">
+  <!-- Section 1: Basic Job Information -->
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold text-primary mb-2">Job Information</h3>
+
+    <div class="mb-2">
+      <label class="block text-sm font-medium text-secondary">Title</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobRequest.title }}
+      </p>
+    </div>
+
+    <div class="mb-2">
+      <label class="block text-sm font-medium text-secondary">Description</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobRequest.description }}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-secondary">Salary</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          ₹{{ jobRequest.salary }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Stipend</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.stipend || 'N/A' }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Location</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.location }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Job Type</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.jobType }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Status</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.status }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Eligibility Criteria -->
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold text-primary mb-2">Eligibility Criteria</h3>
+
+    <div class="mb-2">
+      <label class="block text-sm font-medium text-secondary">Criteria Name</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobRequest.eligibilityCriteria?.name }}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-secondary">Min CGPA</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.eligibilityCriteria?.minCgpa || 'N/A' }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Min Bachelor's GPA</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.eligibilityCriteria?.minBachelorsGpa || 'N/A' }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">10th %</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.eligibilityCriteria?.minTenthPercentage || 'N/A' }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">12th %</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.eligibilityCriteria?.minTwelfthPercentage || 'N/A' }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Diploma %</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.eligibilityCriteria?.minDiplomaPercentage || 'N/A' }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Max Backlogs</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.eligibilityCriteria?.maxBacklogs }}
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-secondary">Max Live Backlogs</label>
+        <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+          {{ jobRequest.eligibilityCriteria?.maxLiveBacklogs }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Allowed Degrees -->
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold text-primary mb-2">Allowed Degrees</h3>
+
+    <p class="mb-2 text-sm text-secondary">
+      {{ jobRequest.allowAllDegrees ? 'All degrees are allowed' : 'Specific degrees only' }}
+    </p>
+
+    <div *ngIf="!jobRequest.allowAllDegrees" class="flex flex-wrap gap-2">
+      <span
+        *ngFor="let degree of jobRequest.allowedDegrees"
+        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+      >
+        {{ degree.name }}
+      </span>
+    </div>
+  </div>
+</ng-container>

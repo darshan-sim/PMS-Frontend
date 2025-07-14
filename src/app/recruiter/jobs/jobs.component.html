@@ -17,7 +17,7 @@
       <li>
         <button
           class="w-full text-left px-4 py-2 bg-warning-bg-light text-warning-text-dark rounded-md hover:opacity-80 transition cursor-pointer"
-          (click)="onCreate()"
+          (click)="onSend()"
         >
           <i class="fa-solid fa-paper-plane"></i> Send Job Request
         </button>
@@ -31,18 +31,25 @@
           <i class="fas fa-list mr-2"></i> View All Job posts
         </button>
       </li>
+
+      <li>
+        <button
+          id="showList"
+          class="w-full text-left px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition cursor-pointer"
+          (click)="onViewPostedJob()"
+        >
+          <i class="fas fa-list mr-2"></i> View All Posted Job
+        </button>
+      </li>
     </ul>
   </div>
-  <ng-container>
-    <!-- @if (mode() === 'VIEW_ALL') {
-    <app-criteria-list />
-    } @else {
-    <app-criteria-operations />
-    } -->
-  </ng-container>
   @if(mode() === 'VIEW_ALL'){
   <app-job-list />
-  }@else if(mode() === 'VIEW'){
-  <app-job-view />
+  }@else if(mode() === 'JOB_TARGETS'){
+  <app-post-job />
+  } @else if(mode() === 'POSTED_JOB'){
+  <app-posted-job />
+  } @else {
+  <app-job-operations />
   }
 </app-common-page-layout>
