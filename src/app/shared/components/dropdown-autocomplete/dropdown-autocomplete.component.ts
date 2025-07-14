@@ -48,6 +48,7 @@ export class DropdownAutocompleteComponentComponent<T = string> implements OnIni
 
   ngOnInit(): void {
     this.setInitialQueryFromOptions();
+    console.log(this.options())
   }
 
   ngOnChanges(changes: SimpleChanges): void {

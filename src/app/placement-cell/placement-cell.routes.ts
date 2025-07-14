@@ -28,10 +28,9 @@ export const PLACEMENT_CELL_ROUTES: Routes = [
         title: 'Student Details',
       },
       {
-        path: 'job-requests',
-        loadComponent: () =>
-          import('./job-requests/job-requests.component').then(m => m.JobRequestsComponent),
-        title: 'Job Requests',
+        path: 'jobs',
+        loadComponent: () => import('./jobs/jobs.component').then(m => m.JobsComponent),
+        title: 'Jobs',
       },
       {
         path: 'drives',

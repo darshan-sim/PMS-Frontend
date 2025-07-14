@@ -49,8 +49,8 @@ export const NAVIGATION_CONFIG: Record<string, NavItem[]> = {
       icon: 'people',
     },
     {
-      label: 'Job Requests',
-      path: '/placement-cell/job-requests',
+      label: 'Jobs',
+      path: '/placement-cell/jobs',
       icon: 'inbox',
     },
     {
