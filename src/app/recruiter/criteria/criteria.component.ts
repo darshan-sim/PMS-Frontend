@@ -9,6 +9,7 @@ import { CriteriaListComponent } from './criteria-list/criteria-list.component';
 import { MODE } from '../../types/common.types';
 import { CriteriaOperationsComponent } from './criteria-operations/criteria-operations.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ToastComponent } from "../../shared/components/toast/toast.component";
 
 @Component({
   selector: 'app-criteria',
@@ -19,7 +20,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     HeadSlotDirective,
     CriteriaListComponent,
     CriteriaOperationsComponent,
-  ],
+    ToastComponent
+],
   animations: [
     trigger('fadeSlide', [
       transition(':enter', [

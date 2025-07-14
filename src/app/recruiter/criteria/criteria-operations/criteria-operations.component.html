@@ -1,8 +1,13 @@
 <!-- [@openClose]="isOpen ? 'open' : 'closed'" -->
-<app-toast />
 <form @fadeSlide [formGroup]="eligibilityCriteriaForm" class="space-y-6">
   <h3 class="text-lg font-medium text-gray-900 border-b pb-2 border-secondary">
-    Create Eligibility
+    {{
+      operation() === 'CREATE'
+        ? 'Create Job Request'
+        : operation() === 'VIEW'
+        ? 'View Job Request'
+        : 'Edit Job Request'
+    }}
   </h3>
   <div>
     <app-shared-input

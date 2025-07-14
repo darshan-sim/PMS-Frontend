@@ -58,7 +58,7 @@ export class LoginComponent {
         nonNullable: true,
         validators: [Validators.required, Validators.email],
       }),
-      password: this.fb.control('password123', {
+      password: this.fb.control('', {
         nonNullable: true,
         validators: [Validators.required],
       }),

@@ -87,4 +87,8 @@ export class PostJobComponent implements OnInit {
       this.selectedJobRequestId.set(id);
     }
   }
+
+  isSelectedJobRequest(id: string) {
+    return this.selectedJobRequestId() === id;
+  }
 }

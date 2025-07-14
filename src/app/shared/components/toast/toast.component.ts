@@ -49,14 +49,14 @@ export class ToastComponent {
   getToastClass(toast: Toast): string {
     switch (toast.type) {
       case 'success':
-        return 'bg-[color:var(--color-success-bg-light)] text-[color:var(--color-success-text-light)]';
+        return 'bg-[color:var(--color-success-bg-light)] text-[color:var(--color-success-text-dark)]';
       case 'error':
-        return 'bg-[color:var(--color-danger-bg-light)] text-[color:var(--color-danger-text-light)]';
+        return 'bg-[color:var(--color-danger-bg-light)] text-[color:var(--color-danger-text-dark)]';
       case 'warning':
-        return 'bg-[color:var(--color-warning-bg-light)] text-[color:var(--color-warning-text-light)]';
+        return 'bg-[color:var(--color-warning-bg-light)] text-[color:var(--color-warning-text-dark)]';
       case 'info':
       default:
-        return 'bg-[color:var(--color-info-bg-light)] text-[color:var(--color-info-text-light)]';
+        return 'bg-[color:var(--color-info-bg-light)] text-[color:var(--color-info-text-dark)]';
     }
   }
 }

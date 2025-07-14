@@ -1,8 +1,7 @@
 <ng-container *ngIf="jobRequests$ | async as data">
   <div class="stats-container" *ngIf="jobRequestStats$ | async as stats">
-    <!-- Total Job Requests -->
     <!-- <ng-container *ngIf="jobRequestStats$ | async as stats"> -->
-    <app-stats-card @fadeSlide [title]="'Total Job Requests'">
+    <app-stats-card @fadeSlide [title]="'Total Jobs'">
       <div card-icon bgColor="bg-info-bg-dark">
         <i class="fas fa-briefcase text-white"></i>
       </div>
@@ -10,7 +9,7 @@
         <p>{{ stats.totalJobRequest }}</p>
       </ng-container>
     </app-stats-card>
-    <app-stats-card @fadeSlide [title]="'Total Job Requests'">
+    <app-stats-card @fadeSlide [title]="'Total Job Posted'">
       <div card-icon bgColor="bg-info-bg-dark">
         <i class="fa-solid fa-chart-pie text-white"></i>
       </div>

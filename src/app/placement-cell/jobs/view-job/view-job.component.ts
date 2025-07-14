@@ -1,6 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
-import { JobRequest } from '../../../types/job-request.types';
-import { map, Observable } from 'rxjs';
+import { Component, inject } from '@angular/core';
 import { ToastService } from '../../../services/toast.service';
 import { JobService } from '../../../services/job.service';
 import { AsyncPipe, CommonModule } from '@angular/common';

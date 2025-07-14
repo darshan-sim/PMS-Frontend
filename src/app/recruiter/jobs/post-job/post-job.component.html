@@ -1,7 +1,7 @@
 <app-toast />
 <ng-container *ngIf="jobRequests$ | async as jobRequests">
   <h3 class="text-lg text-secondary">SELECT JOB REQUEST</h3>
-  <div class="flex gap-4 justify-start items-end">
+  <div class="flex gap-4 justify-start items-end overflow-auto">
     @for (jobRequest of jobRequests; track jobRequest.jobRequestId) { @if(jobRequest.status !==
     'closed'){
     <div
@@ -53,10 +53,7 @@
       <div class="mt-3">
         <p class="text-sm text-gray-500 mb-1">Allowed Degrees:</p>
         <div class="flex flex-wrap gap-2">
-          <span
-            *ngFor="let degree of jobRequest.allowedDegrees"
-            class="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded"
-          >
+          <span *ngFor="let degree of jobRequest.allowedDegrees" class="chip bg-gray-200">
             {{ degree.name }}
           </span>
         </div>
@@ -75,7 +72,11 @@
           class="w-full mt-4 text-left px-4 py-2 bg-success-text-dark text-white rounded-md hover:bg-success-bg-dark transition cursor-pointer"
           (click)="onSelectJobRequest(jobRequest.jobRequestId)"
         >
-          <i class="fa-solid fa-eye mr-1"></i> Select Job Request
+          @if(isSelectedJobRequest(jobRequest.jobRequestId)){
+          <i class="fa-solid fa-square-check text-success-text-light"></i>
+          }@else {
+          <i class="fa-regular fa-square-check"></i>
+          } Select Job Request
         </button>
       </div>
     </div>
@@ -118,10 +119,7 @@
       <div>
         <p class="text-sm text-gray-500 mb-1">Degrees:</p>
         <div class="flex flex-wrap gap-2">
-          <span
-            *ngFor="let degree of placementCell.degrees"
-            class="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded"
-          >
+          <span *ngFor="let degree of placementCell.degrees" class="chip bg-gray-200">
             {{ degree.name }}
           </span>
         </div>

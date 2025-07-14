@@ -1,5 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
-import { JobTarget, JobTargetStatus } from '../../types/job-target.types';
+import {
+  isCorrectStatus,
+  JobTarget,
+  JobTargetStatus,
+  JobTargetStatusType,
+} from '../../types/job-target.types';
 import { map, Observable } from 'rxjs';
 import { PlacementCellService } from '../../services/placement-cell.service';
 import { ToastService } from '../../services/toast.service';
@@ -34,6 +39,7 @@ export class JobsComponent {
   placementCellStats$ = new Observable<PlacementCellJobRequestStats[]>();
   postedJobs$ = new Observable<JobTarget[]>();
   viewJobRequest = false;
+  selectedStatusForFilter = signal<JobTargetStatusType | undefined>(undefined);
 
   ngOnInit(): void {
     this.postedJobs$ = this.jobService.getPostedJobs().pipe(map(res => res.data));
@@ -69,5 +75,19 @@ export class JobsComponent {
       this.toastService.show(res.message, 'success');
       this.postedJobs$ = this.jobService.getPostedJobs().pipe(map(res => res.data));
     });
+  }
+
+  onFilterSelected(status: string) {
+    const currentStatus = this.selectedStatusForFilter();
+    if (currentStatus === status) {
+      this.selectedStatusForFilter.set(undefined);
+      this.postedJobs$ = this.jobService.getPostedJobs().pipe(map(res => res.data));
+      return;
+    }
+    if (!isCorrectStatus(status)) {
+      return;
+    }
+    this.selectedStatusForFilter.set(status);
+    this.postedJobs$ = this.jobService.getPostedJobs(status).pipe(map(res => res.data));
   }
 }

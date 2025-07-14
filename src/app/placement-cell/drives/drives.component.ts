@@ -1,30 +1,32 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+// import { DriveListComponent } from '../../recruiter/drives/drive-list/drive-list.component';
+import { DriveService } from '../../services/drive.service';
+import { MODE } from '../../types/common.types';
+import { ToastComponent } from '../../shared/components/toast/toast.component';
+import { CommonPageLayoutComponent } from '../../shared/common-page-layout/common-page-layout.component';
+import { AsideSlotDirective } from '../../shared/directives/aside-slot.directive';
+import { HeadSlotDirective } from '../../shared/directives/head-slot.directive';
+import { DriveListComponent } from "../../shared/components/drive-list/drive-list.component";
+import { DriveViewComponent } from "../../shared/components/drive-view/drive-view.component";
 
 @Component({
   selector: 'app-drives',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div class="container mx-auto p-6">
-      <h1 class="text-2xl font-bold mb-6">Drive Management</h1>
-
-      <div class="bg-white rounded-lg shadow p-6">
-        <div class="mb-6">
-          <p class="text-gray-600 mb-4">
-            Manage and schedule placement drives for your institution.
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <!-- Placeholder for drives list -->
-          <p class="text-gray-500 italic">No placement drives scheduled at the moment.</p>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [],
+  imports: [
+    ToastComponent,
+    CommonPageLayoutComponent,
+    AsideSlotDirective,
+    HeadSlotDirective,
+    DriveListComponent,
+    DriveViewComponent
+],
+  templateUrl: './drives.component.html',
+  styleUrl: './drives.component.css',
 })
 export class DrivesComponent {
-  // Component logic will be implemented here
+  driveService = inject(DriveService);
+  mode = this.driveService.mode;
+
+  onViewAll() {
+    this.driveService.setMode(MODE.VIEW_ALL);
+  }
 }

@@ -3,6 +3,9 @@ export enum JobTargetStatus {
   approved = 'approved',
   rejected = 'rejected',
 }
+
+export type JobTargetStatusType = 'pending' | 'approved' | 'rejected';
+
 export interface JobTargetCreateDto {
   placementCellId: string;
   jobRequestId: string;
@@ -49,3 +52,8 @@ export interface JobTarget {
     title: string;
   };
 }
+
+export function isCorrectStatus(status: string): status is JobTargetStatusType {
+  return ['pending', 'approved', 'rejected'].includes(status);
+}
+

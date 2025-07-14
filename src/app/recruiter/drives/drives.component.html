@@ -1,0 +1,47 @@
+<app-toast />
+<app-common-page-layout>
+  <div head>
+    <h2 class="text-2xl font-bold">Drives</h2>
+    <p class="text-md font-semibold text-gray-500">Create and manage Drives</p>
+  </div>
+
+  <div aside class="max-w-sm">
+    <ul class="space-y-2">
+      <li>
+        <button
+          class="w-full text-left px-4 py-2 bg-success-text-light text-success-bg-dark rounded-md hover:opacity-80 transition cursor-pointer"
+          (click)="onCreate()"
+        >
+          <i class="fas fa-plus-circle mr-2"></i> Create New Drive
+        </button>
+      </li>
+      <li>
+        <!-- <button
+          class="w-full text-left px-4 py-2 bg-warning-bg-light text-warning-text-dark rounded-md hover:opacity-80 transition cursor-pointer"
+          (click)="onSend()"
+        >
+          <i class="fa-solid fa-paper-plane"></i> Send Job Request
+        </button> -->
+      </li>
+      <li>
+        <button
+          id="showList"
+          class="w-full text-left px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition cursor-pointer"
+          (click)="onViewAll()"
+        >
+          <i class="fas fa-list mr-2"></i> View All Drives
+        </button>
+      </li>
+
+      <li>
+      </li>
+    </ul>
+  </div>
+  @if(mode() === 'VIEW_ALL'){
+  <app-drive-list />
+  } @else if (mode() === 'VIEW'){
+  <app-drive-view />
+  }@else {
+  <app-drive-create />
+  }
+</app-common-page-layout>

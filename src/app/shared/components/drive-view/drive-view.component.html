@@ -1,0 +1,102 @@
+<ng-container *ngIf="jobDrive$ | async as jobDrive">
+  <h3 class="text-lg font-semibold text-primary mb-4">Drive Details</h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Placement Cell Info -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Placement Cell</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobDrive.placementCell.placementCellName }}
+      </p>
+    </div>
+
+    <!-- Job Request Title -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Job Request Title</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobDrive.jobRequest.title }}
+      </p>
+    </div>
+
+    <!-- Drive Status -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Drive Status</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobDrive.status | titlecase }}
+      </p>
+    </div>
+
+    <!-- Eligibility Criteria ID -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Eligibility Criteria ID</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobDrive.jobRequest.eligibilityCriteriaId }}
+      </p>
+    </div>
+
+    <!-- Created At -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Created At</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobDrive.createdAt | date : 'fullDate' }}
+      </p>
+    </div>
+
+    <!-- Recruiter ID -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Recruiter ID</label>
+      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
+        {{ jobDrive.recruiterId }}
+      </p>
+    </div>
+
+    <!-- Selection Rounds -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Selection Rounds</label>
+      <p
+        class="px-3 py-1.5 rounded-md bg-white border border-gray-200"
+        [ngClass]="{
+          'text-gray-400': !jobDrive.selectionRoundIds.length,
+          'text-primary': jobDrive.selectionRoundIds.length
+        }"
+      >
+        {{ jobDrive.selectionRoundIds.length || 'No Selection yet' }}
+      </p>
+    </div>
+
+    <!-- Drive Date + Edit Option -->
+    <div>
+      <label class="block text-sm font-medium text-secondary">Drive Date</label>
+
+      <ng-container *ngIf="!editMode; else editDriveDate">
+        <div
+          class="flex items-center justify-between px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary"
+        >
+          <span>{{ jobDrive.driveDate | date : 'fullDate' }}</span>
+          <!-- <button class="text-blue-600 hover:underline text-sm font-medium">Edit</button> -->
+        </div>
+      </ng-container>
+
+      <ng-template #editDriveDate>
+        <div class="flex items-center gap-4 mt-1">
+          <mat-form-field appearance="fill" class="w-full max-w-xs">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="updatedDriveDate" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <button class="px-3 py-1.5 bg-green-600 text-white rounded hover:bg-green-700 text-sm">
+            Update
+          </button>
+
+          <button
+            (click)="cancelEdit()"
+            class="px-3 py-1.5 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 text-sm"
+          >
+            Cancel
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>

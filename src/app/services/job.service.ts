@@ -9,6 +9,7 @@ import {
   JobTarget,
   JobTargetCreateDto,
   JobTargetSingleResponse,
+  JobTargetStatusType,
   JobTargetUpdateStatusDto,
 } from '../types/job-target.types';
 
@@ -85,8 +86,12 @@ export class JobService {
       .pipe(shareReplay(1));
   }
 
-  getPostedJobs(): Observable<ApiResponse<JobTarget[]>> {
-    return this.apiService.get<JobTarget[]>(`job-target/`).pipe(shareReplay(1));
+  getPostedJobs(filterStatus?: JobTargetStatusType): Observable<ApiResponse<JobTarget[]>> {
+    let params = new HttpParams();
+    if (filterStatus) {
+      params = params.set('status', filterStatus);
+    }
+    return this.apiService.get<JobTarget[]>(`job-target/`, params).pipe(shareReplay(1));
   }
 
   updateJobPost(

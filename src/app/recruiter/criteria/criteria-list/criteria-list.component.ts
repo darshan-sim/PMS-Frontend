@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { EligibilityCriteriaService } from '../../../services/eligibility-criteria.service';
-import { catchError, identity, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { EligibilityCriteria } from '../../../types/eligibility-criteria.type';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';

@@ -24,11 +24,6 @@ export const NAVIGATION_CONFIG: Record<string, NavItem[]> = {
       path: '/student/selection',
       icon: 'assignment_turned_in',
     },
-    {
-      label: 'Results & Offers',
-      path: '/student/results',
-      icon: 'military_tech',
-    },
   ],
 
   // Placement cell navigation items
@@ -86,11 +81,6 @@ export const NAVIGATION_CONFIG: Record<string, NavItem[]> = {
       icon: 'rule',
     },
     {
-      label: 'Target Colleges',
-      path: '/recruiter/target-colleges',
-      icon: 'school',
-    },
-    {
       label: 'Drive Schedule',
       path: '/recruiter/drives',
       icon: 'event',
@@ -106,7 +96,7 @@ export const NAVIGATION_CONFIG: Record<string, NavItem[]> = {
       icon: 'description',
     },
     {
-      label: 'Results & Offers',
+      label: 'Results',
       path: '/recruiter/results',
       icon: 'assignment_turned_in',
     },

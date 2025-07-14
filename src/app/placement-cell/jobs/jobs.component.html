@@ -18,6 +18,44 @@
       </li>
     </ul>
   </div>
+  <div>
+    @if (!viewJobRequest) {
+    <div class="flex gap-2 my-3">
+
+      <p class="text-secondary">Filter by:</p>
+      <button
+        class="btn px-3 py-1 btn-warning rounded-md hover:opacity-80 transition cursor-pointer"
+        [ngClass]="{
+          'btn-solid': selectedStatusForFilter() === 'pending',
+          'btn-outline': selectedStatusForFilter() !== 'pending'
+        }"
+        (click)="onFilterSelected('pending')"
+      >
+        pending
+      </button>
+      <button
+        class="btn px-3 py-1 btn-success rounded-md hover:opacity-80 transition cursor-pointer"
+        [ngClass]="{
+          'btn-solid': selectedStatusForFilter() === 'approved',
+          'btn-outline': selectedStatusForFilter() !== 'approved'
+        }"
+        (click)="onFilterSelected('approved')"
+      >
+        approved
+      </button>
+      <button
+        class="btn px-3 py-1 btn-danger rounded-md hover:opacity-80 transition cursor-pointer"
+        [ngClass]="{
+          'btn-solid': selectedStatusForFilter() === 'rejected',
+          'btn-outline': selectedStatusForFilter() !== 'rejected'
+        }"
+        (click)="onFilterSelected('rejected')"
+      >
+        rejected
+      </button>
+    </div>
+  }
+  </div>
   <ng-container *ngIf="postedJobs$ | async as postedJobs">
     @if (viewJobRequest) {
     <app-view-job />
@@ -32,7 +70,6 @@
             <h3 class="text-md font-semibold text-gray-900">
               {{ job.jobRequest.title }}
             </h3>
-            <p class="text-sm text-gray-500">Cell: {{ job.placementCell.placementCellName }}</p>
           </div>
           <div
             class="text-xs font-medium px-2.5 py-0.5 rounded"
@@ -49,32 +86,34 @@
         <div class="mt-3 space-y-1 text-sm text-gray-700">
           <p><strong>Company:</strong> {{ job.recruiter.companyName }}</p>
           <p>
-            <strong>Created At:</strong>
-            {{ job.createdAt ? (job.createdAt | date : 'medium') : 'Not Set' }}
+            <strong>Date:</strong>
+            {{ job.createdAt ? (job.createdAt | date : 'MM/dd/yy') : 'Not Set' }}
           </p>
         </div>
         <div>
           <button
-            class="w-full mt-4 text-left px-4 py-2 bg-info-bg-dark text-white rounded-md hover:bg-info-bg-light hover:text-info-bg-dark transition cursor-pointer"
+            class="w-full mt-4 text-left px-4 py-2 bg-info-text-dark text-white rounded-md hover:opacity-70 transition cursor-pointer"
             (click)="onViewJobRequest(job.jobRequest.jobRequestId, job.jobTargetId)"
           >
             <i class="fa-solid fa-eye mr-1"></i> View Job Request
           </button>
-          @if(job.status === 'pending'){
-          <button
-            class="w-full mt-4 text-left px-4 py-2 bg-success-bg-dark text-white rounded-md hover:bg-success-bg-light hover:text-success-bg-dark transition cursor-pointer"
-            (click)="onAcceptJobTarget(job.jobTargetId)"
-          >
-            <i class="fa-solid fa-eye mr-1"></i> Accept Job request
-          </button>
+          <div class="flex mt-4 gap-2">
+            @if(job.status === 'pending'){
+            <button
+              class="w-full text-left px-2 py-1 bg-success-text-dark text-white rounded-md hover:opacity-70 transition cursor-pointer"
+              (click)="onAcceptJobTarget(job.jobTargetId)"
+            >
+              <i class="fa-solid fa-check"></i> Accept Job
+            </button>
 
-          <button
-            class="w-full mt-4 text-left px-4 py-2 bg-danger-bg-dark text-white rounded-md hover:bg-danger-bg-light hover:text-danger-bg-dark transition cursor-pointer"
-            (click)="onRejectJobTarget(job.jobTargetId)"
-          >
-            <i class="fa-solid fa-eye mr-1"></i> Reject Job request
-          </button>
-          }
+            <button
+              class="w-full text-left px-2 py-1 bg-danger-text-dark text-white rounded-md hover:opacity-70 transition cursor-pointer"
+              (click)="onRejectJobTarget(job.jobTargetId)"
+            >
+              <i class="fa-solid fa-xmark"></i> Reject Job
+            </button>
+            }
+          </div>
         </div>
       </div>
       }

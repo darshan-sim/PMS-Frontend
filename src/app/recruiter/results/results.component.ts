@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="container mx-auto p-6">
-      <h1 class="text-2xl font-bold mb-6">Results & Offers</h1>
+      <h1 class="text-2xl font-bold mb-6">Results </h1>
 
       <div class="bg-white rounded-lg shadow p-6">
         <div class="mb-6">

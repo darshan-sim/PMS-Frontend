@@ -102,50 +102,12 @@ export class CriteriaOperationsComponent implements OnInit {
       return;
     }
     this.eligibilityCriteriaForm.patchValue(this.eligibilityCriteriaData);
+    // this.toastService.show('Eligibility criteria reset', 'success');
     this.eligibilityCriteriaService.setMode(MODE.VIEW);
   }
 
-  onCreate() {
-    if (this.eligibilityCriteriaForm.invalid) {
-      this.eligibilityCriteriaForm.markAllAsTouched();
-      this.eligibilityCriteriaForm.markAsDirty();
-      this.toastService.show('Please fill all required fields correctly', 'error');
-      return;
-    }
-    if (!this.eligibilityCriteriaForm.touched) {
-      this.toastService.show(`You haven't made any changes`, 'warning');
-      return;
-    }
-    const rowData = this.eligibilityCriteriaForm.getRawValue();
-    const eligibilityCriteria = {
-      ...(rowData && { name: rowData.name }),
-      ...(rowData?.minCgpa && { minCgpa: +rowData.minCgpa }),
-      ...(rowData?.minBachelorsGpa && { minBachelorsGpa: +rowData.minBachelorsGpa }),
-      ...(rowData?.minTenthPercentage && {
-        minTenthPercentage: +rowData.minTenthPercentage,
-      }),
-      ...(rowData?.minTwelfthPercentage && {
-        minTwelfthPercentage: +rowData.minTwelfthPercentage,
-      }),
-      ...(rowData?.minDiplomaPercentage && {
-        minDiplomaPercentage: +rowData.minDiplomaPercentage,
-      }),
-      ...(rowData?.maxBacklogs && { maxBacklogs: +rowData.maxBacklogs }),
-      ...(rowData?.maxLiveBacklogs && { maxLiveBacklogs: +rowData.maxLiveBacklogs }),
-    };
-    this.eligibilityCriteriaService
-      .create(eligibilityCriteria)
-      .pipe(
-        catchError(error => {
-          return throwError(() => {
-            this.setError(error.error.data);
-          });
-        })
-      )
-      .subscribe(res => res.data);
-  }
-
   onEdit() {
+    this.toastService.show('Edit mode', 'info');
     this.eligibilityCriteriaService.setMode(MODE.UPDATE);
   }
 
@@ -201,6 +163,7 @@ export class CriteriaOperationsComponent implements OnInit {
         .subscribe(res => {
           this.eligibilityCriteriaData = res.data;
           this.eligibilityCriteriaService.setMode(MODE.VIEW);
+          this.toastService.show('Eligibility criteria updated successfully', 'success');
         });
     } else if (this.operation() === MODE.CREATE) {
       this.eligibilityCriteriaService
@@ -215,6 +178,7 @@ export class CriteriaOperationsComponent implements OnInit {
         .subscribe(res => {
           this.eligibilityCriteriaData = res.data;
           this.eligibilityCriteriaService.setMode(MODE.VIEW);
+          this.toastService.show('Eligibility criteria created successfully', 'success');
         });
     }
   }

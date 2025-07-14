@@ -10,7 +10,7 @@ import { JobListComponent } from './job-list/job-list.component';
 import { MODE } from '../../types/common.types';
 import { JobOperationsComponent } from './job-operations/job-operations.component';
 import { PostJobComponent } from './post-job/post-job.component';
-import { PostedJobComponent } from "./posted-job/posted-job.component";
+import { PostedJobComponent } from './posted-job/posted-job.component';
 
 @Component({
   selector: 'app-jobs',
@@ -24,8 +24,8 @@ import { PostedJobComponent } from "./posted-job/posted-job.component";
     JobListComponent,
     JobOperationsComponent,
     PostJobComponent,
-    PostedJobComponent
-],
+    PostedJobComponent,
+  ],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css',
   styles: [],
@@ -41,7 +41,7 @@ import { PostedJobComponent } from "./posted-job/posted-job.component";
     ]),
   ],
 })
-export class JobsComponent implements OnInit {
+export class JobsComponent  {
   private jobService = inject(JobService);
   mode = this.jobService.mode;
 
@@ -61,5 +61,4 @@ export class JobsComponent implements OnInit {
     this.jobService.setMode(MODE.POSTED_JOB);
   }
 
-  ngOnInit(): void {}
 }

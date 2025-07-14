@@ -1,0 +1,47 @@
+<ng-container *ngIf="jobDrives$ | async as jobDrives">
+  @if (jobDrives) {
+  <table mat-table [dataSource]="jobDrives" class="w-full">
+    <ng-container matColumnDef="jobPost">
+      <th mat-header-cell *matHeaderCellDef>Job Post</th>
+      <td mat-cell *matCellDef="let drive">{{ drive.jobRequest.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="driveDate">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let drive">
+        {{ drive.driveDate | date : 'mediumDate' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let drive">
+        {{ statusLabel(drive.status) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="placementCellId">
+      <th mat-header-cell *matHeaderCellDef>Placement Cell</th>
+      <td mat-cell *matCellDef="let drive">{{ drive.placementCell.placementCellName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let drive">
+        <button class="btn btn-info btn-sm btn-solid" (click)="onView(drive.jobDriveId)">View</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    (page)="onPageEvent($event)"
+    [hidePageSize]="true"
+  >
+  </mat-paginator>
+  }
+</ng-container>
