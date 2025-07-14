@@ -5,7 +5,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MODE } from '../../../types/common.types';
-import { JobType } from '../../../types/job-request.types';
+import { JobType, JobTypeTsType } from '../../../types/job-request.types';
 import { StatsCardComponent } from '../../../shared/components/stats-card/stats-card.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CardIconDirective } from '../../../shared/directives/card-icon.directive';
@@ -84,7 +84,7 @@ export class JobListComponent implements OnInit {
     this.getAllJobRequests();
   }
 
-  jobType(type: keyof typeof JobType) {
+  jobType(type: JobTypeTsType) {
     return JobType[type];
   }
 

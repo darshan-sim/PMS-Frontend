@@ -22,3 +22,13 @@ export interface PlacementCellUpdateRequest {
   domains?: string[];
   degrees?: string[];
 }
+
+export interface PlacementCellJobRequestStats {
+  placementCellId: string;
+  placementCellName: string;
+  branch: Branch;
+  totalStudents: number;
+  totalDegrees: number;
+  domains: string[];
+  degrees: Degree[];
+}

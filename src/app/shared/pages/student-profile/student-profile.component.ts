@@ -15,9 +15,7 @@ import {
   Component,
   inject,
   input,
-  OnChanges,
   OnInit,
-  resource,
   signal,
   ViewChild,
 } from '@angular/core';

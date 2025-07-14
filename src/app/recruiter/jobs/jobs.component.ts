@@ -8,7 +8,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { JobService } from '../../services/job.service';
 import { JobListComponent } from './job-list/job-list.component';
 import { MODE } from '../../types/common.types';
-import { JobViewComponent } from './job-view/job-view.component';
+import { JobOperationsComponent } from './job-operations/job-operations.component';
+import { PostJobComponent } from './post-job/post-job.component';
+import { PostedJobComponent } from "./posted-job/posted-job.component";
 
 @Component({
   selector: 'app-jobs',
@@ -20,8 +22,10 @@ import { JobViewComponent } from './job-view/job-view.component';
     HeadSlotDirective,
     StatsCardComponent,
     JobListComponent,
-    JobViewComponent,
-  ],
+    JobOperationsComponent,
+    PostJobComponent,
+    PostedJobComponent
+],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css',
   styles: [],
@@ -42,11 +46,19 @@ export class JobsComponent implements OnInit {
   mode = this.jobService.mode;
 
   onViewAll() {
-    throw new Error('Method not implemented.');
+    this.jobService.setMode(MODE.VIEW_ALL);
+  }
+
+  onSend() {
+    this.jobService.setMode(MODE.JOB_TARGETS);
   }
 
   onCreate() {
-    throw new Error('Method not implemented.');
+    this.jobService.setMode(MODE.CREATE);
+  }
+
+  onViewPostedJob() {
+    this.jobService.setMode(MODE.POSTED_JOB);
   }
 
   ngOnInit(): void {}

@@ -5,12 +5,15 @@ export const JobType = {
   full_time: 'FULL TIME',
   part_time: 'PART TIME',
   internship: 'INTERNSHIP',
-};
+} as const;
 
 export const JobRequestStatus = {
   active: 'ACTIVE',
   closed: 'CLOSE',
-};
+} as const;
+
+export type JobTypeTsType = keyof typeof JobType;
+export type JobRequestStatusType = keyof typeof JobRequestStatus;
 
 export interface JobRequestStats {
   totalJobRequest: number;
@@ -27,13 +30,25 @@ export interface JobRequest {
   jobRequestId: string;
   title: string;
   description: string;
-  salary: string;
-  stipend: string | null;
+  salary: number;
+  stipend?: string | null;
   location: string;
-  jobType: typeof JobType;
-  status: typeof JobRequestStatus;
+  jobType: JobTypeTsType;
+  status: JobRequestStatusType;
   allowAllDegrees: boolean;
   eligibilityCriteriaId: string;
   eligibilityCriteria: EligibilityCriteria;
-  allowedDegrees: Degree[];
+  allowedDegrees?: Degree[];
+}
+export interface JobRequestUpdate {
+  title: string;
+  description: string;
+  salary: number;
+  stipend?: number | null;
+  location: string;
+  jobType: JobTypeTsType;
+  status: JobRequestStatusType;
+  allowAllDegrees: boolean;
+  eligibilityCriteriaId: string;
+  allowedDegrees?: string[];
 }

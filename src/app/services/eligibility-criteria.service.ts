@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { EligibilityCriteria, EligibilityCriteriaCreate } from '../types/eligibility-criteria.type';
+import { EligibilityCriteria, EligibilityCriteriaCreate, EligibilityCriteriaSelectionList } from '../types/eligibility-criteria.type';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../types/api-response.types';
 import { ApiService } from './api.service';
@@ -24,6 +24,12 @@ export class EligibilityCriteriaService {
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
     return this.apiService.get<EligibilityCriteria[]>('eligibility-criteria', params);
+  }
+
+  getAllEligibilityCriteriaSelectionList(): Observable<
+    ApiResponse<EligibilityCriteriaSelectionList[]>
+  > {
+    return this.apiService.get<EligibilityCriteria[]>('eligibility-criteria/selection-list');
   }
 
   create(

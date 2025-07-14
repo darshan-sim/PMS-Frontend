@@ -1,6 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { ApiService } from './api.service';
-import { PlacementCell, PlacementCellUpdateRequest } from '../types/placement-cell.types';
+import {
+  PlacementCell,
+  PlacementCellJobRequestStats,
+  PlacementCellUpdateRequest,
+} from '../types/placement-cell.types';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { ApiResponse } from '../types/api-response.types';
 
@@ -52,5 +56,9 @@ export class PlacementCellService {
     return this.api.get<{ placementCellId: string; placementCellName: string }[]>(
       'placement_cells_list'
     );
+  }
+
+  getPlacementCellsStatsForJobTarget(): Observable<ApiResponse<PlacementCellJobRequestStats[]>> {
+    return this.api.get<PlacementCellJobRequestStats[]>('placement-cell/job-target-stats');
   }
 }

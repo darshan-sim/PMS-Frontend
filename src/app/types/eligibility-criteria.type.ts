@@ -9,6 +9,9 @@ export type EligibilityCriteria = {
   maxBacklogs: number | null;
   maxLiveBacklogs: number | null;
 };
+
+export type EligibilityCriteriaSelectionList = Pick<EligibilityCriteria, 'criteriaId' | 'name'>;
+
 export type EligibilityCriteriaCreate = {
   name: string;
   minCgpa?: number;

@@ -2,9 +2,15 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
 import { ApiResponse } from '../types/api-response.types';
-import { JobRequest, JobRequestStats, JobType } from '../types/job-request.types';
+import { JobRequest, JobRequestStats, JobRequestUpdate } from '../types/job-request.types';
 import { HttpParams } from '@angular/common/http';
 import { MODE } from '../types/common.types';
+import {
+  JobTarget,
+  JobTargetCreateDto,
+  JobTargetSingleResponse,
+  JobTargetUpdateStatusDto,
+} from '../types/job-target.types';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +27,7 @@ export class JobService {
   private jobRequestStatsSubject$ = new BehaviorSubject<JobRequestStats | null>(null);
   jobRequestStats$ = this.jobRequestStatsSubject$.asObservable();
 
-  _mode = signal<MODE>(MODE.VIEW_ALL);
+  private _mode = signal<MODE>(MODE.VIEW_ALL);
   mode = computed(() => this._mode());
 
   getAllJobRequest(page: number, pageSize: number): Observable<ApiResponse<JobRequest[]>> {
@@ -44,12 +50,52 @@ export class JobService {
   }
 
   getJobRequestById(id: string): Observable<ApiResponse<JobRequest>> {
+    console.log({ id });
     return this.apiService.get<JobRequest>(`job-request/${id}`).pipe(
       tap(res => {
         this.jobRequestSubject$.next(res.data);
       }),
       shareReplay(1)
     );
+  }
+
+  updateJobRequest(id: string, jobRequest: JobRequestUpdate): Observable<ApiResponse<JobRequest>> {
+    return this.apiService.put<JobRequest, JobRequestUpdate>(`job-request/${id}`, jobRequest).pipe(
+      tap(res => {
+        this.jobRequestSubject$.next(res.data);
+      }),
+      shareReplay(1)
+    );
+  }
+
+  createJobRequest(jobRequest: JobRequestUpdate): Observable<ApiResponse<JobRequest>> {
+    return this.apiService.post<JobRequest, JobRequestUpdate>(`job-request/`, jobRequest).pipe(
+      tap(res => {
+        this.jobRequestSubject$.next(res.data);
+      }),
+      shareReplay(1)
+    );
+  }
+
+  createJobTarget(
+    jobTargetCreateDto: JobTargetCreateDto
+  ): Observable<ApiResponse<JobTargetSingleResponse>> {
+    return this.apiService
+      .post<JobTargetSingleResponse, JobTargetCreateDto>(`job-target/`, jobTargetCreateDto)
+      .pipe(shareReplay(1));
+  }
+
+  getPostedJobs(): Observable<ApiResponse<JobTarget[]>> {
+    return this.apiService.get<JobTarget[]>(`job-target/`).pipe(shareReplay(1));
+  }
+
+  updateJobPost(
+    id: string,
+    jobTargetUpdateStatusDto: JobTargetUpdateStatusDto
+  ): Observable<ApiResponse<JobTargetUpdateStatusDto>> {
+    return this.apiService
+      .put<JobTargetUpdateStatusDto>(`job-target/${id}`, jobTargetUpdateStatusDto)
+      .pipe(shareReplay(1));
   }
 
   setMode(mode: MODE) {

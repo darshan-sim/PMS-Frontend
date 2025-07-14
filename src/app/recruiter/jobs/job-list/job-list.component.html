@@ -31,7 +31,8 @@
       </ng-container>
     </app-stats-card>
   </div>
-  <div class="min-w-sm overflow-auto px-3 py-1">
+  
+  <div @fadeSlide class="min-w-sm overflow-auto px-3 py-1">
     <table mat-table [dataSource]="data">
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>Title</th>
@@ -93,11 +94,11 @@
           <p
             class="chip uppercase"
             [ngClass]="{
-              'chip-success': jobRequest.status,
-              'chip-danger': !jobRequest.status
+              'chip-success': jobRequest.allowAllDegrees,
+              'chip-danger': !jobRequest.allowAllDegrees
             }"
           >
-            {{ jobRequest.status ?? '—' }}
+            {{ jobRequest.allowAllDegrees ?? '—' }}
           </p>
         </td>
       </ng-container>

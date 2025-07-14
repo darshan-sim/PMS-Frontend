@@ -3,6 +3,8 @@ export enum MODE {
   UPDATE = 'UPDATE',
   VIEW = 'VIEW',
   VIEW_ALL = 'VIEW_ALL',
+  JOB_TARGETS = 'JOB_TARGETS',
+  POSTED_JOB = 'POSTED_JOB',
 }
 
 export interface Degree {

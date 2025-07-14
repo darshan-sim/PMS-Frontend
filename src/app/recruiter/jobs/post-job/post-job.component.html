@@ -1,0 +1,142 @@
+<app-toast />
+<ng-container *ngIf="jobRequests$ | async as jobRequests">
+  <h3 class="text-lg text-secondary">SELECT JOB REQUEST</h3>
+  <div class="flex gap-4 justify-start items-end">
+    @for (jobRequest of jobRequests; track jobRequest.jobRequestId) { @if(jobRequest.status !==
+    'closed'){
+    <div
+      class="block grow max-w-sm p-6 border border-gray-200 rounded-lg shadow-sm min-w-sm"
+      [ngClass]="{
+        'bg-white': selectedJobRequestId() !== jobRequest.jobRequestId,
+        'bg-success-bg-light': selectedJobRequestId() === jobRequest.jobRequestId
+      }"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b pb-3">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">{{ jobRequest.title }}</h3>
+          <p class="text-sm text-gray-500">{{ jobRequest.description }}</p>
+        </div>
+        <div class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
+          {{ jobRequest.status }}
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 gap-4 text-center mt-4">
+        <div>
+          <p class="text-sm text-gray-500">Salary</p>
+          <p class="text-lg font-semibold text-gray-900">₹{{ jobRequest.salary | number }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Location</p>
+          <p class="text-lg font-semibold text-gray-900">
+            {{ jobRequest.location }}
+          </p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Type</p>
+          <p class="text-lg font-semibold text-gray-900">
+            {{ jobRequest.jobType }}
+          </p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Allowed Degrees</p>
+          <p class="text-lg font-semibold text-gray-900">
+            {{ jobRequest.allowAllDegrees ? 'All' : jobRequest.allowedDegrees?.length || 0 }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Degrees (if not allowAll) -->
+      @if (!jobRequest.allowAllDegrees && jobRequest.allowedDegrees?.length) {
+      <div class="mt-3">
+        <p class="text-sm text-gray-500 mb-1">Allowed Degrees:</p>
+        <div class="flex flex-wrap gap-2">
+          <span
+            *ngFor="let degree of jobRequest.allowedDegrees"
+            class="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded"
+          >
+            {{ degree.name }}
+          </span>
+        </div>
+      </div>
+      }
+
+      <!-- Action -->
+      <div>
+        <button
+          class="w-full mt-4 text-left px-4 py-2 bg-info-bg-dark text-white rounded-md hover:bg-info-bg-dark transition cursor-pointer"
+          (click)="onViewJobRequest(jobRequest.jobRequestId)"
+        >
+          <i class="fa-solid fa-eye mr-1"></i> View Job Request
+        </button>
+        <button
+          class="w-full mt-4 text-left px-4 py-2 bg-success-text-dark text-white rounded-md hover:bg-success-bg-dark transition cursor-pointer"
+          (click)="onSelectJobRequest(jobRequest.jobRequestId)"
+        >
+          <i class="fa-solid fa-eye mr-1"></i> Select Job Request
+        </button>
+      </div>
+    </div>
+    } }
+  </div>
+</ng-container>
+<div class="w-full border-b border-gray-300 h-1 my-4"></div>
+<ng-container *ngIf="placementCellStats$ | async as placementCellStats">
+  <h3 class="text-lg mt-4 text-secondary">PLACEMENT CELLS</h3>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    @for (placementCell of placementCellStats; track placementCell.placementCellId) {
+    <div
+      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100"
+    >
+      <div class="flex items-center justify-between border-b pb-3">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">{{ placementCell.placementCellName }}</h3>
+          <p class="text-sm text-gray-500">Branch: {{ placementCell.branch.name }}</p>
+        </div>
+        <div class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+          {{ placementCell.branch.name }}
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-4 text-center">
+        <div>
+          <p class="text-sm text-gray-500">Total Students</p>
+          <p class="text-lg font-semibold text-gray-900">{{ placementCell.totalStudents }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Total Degrees</p>
+          <p class="text-lg font-semibold text-gray-900">{{ placementCell.totalDegrees }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Domains</p>
+          <p class="text-lg font-semibold text-gray-900">{{ placementCell.domains.length }}</p>
+        </div>
+      </div>
+      <!-- Degrees List -->
+      <div>
+        <p class="text-sm text-gray-500 mb-1">Degrees:</p>
+        <div class="flex flex-wrap gap-2">
+          <span
+            *ngFor="let degree of placementCell.degrees"
+            class="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded"
+          >
+            {{ degree.name }}
+          </span>
+        </div>
+      </div>
+      <button
+        class="w-full mt-2 text-left px-4 py-2 rounded-md hover:opacity-80 transition cursor-pointer"
+        [ngClass]="{
+          'bg-success-border-light text-success-text-dark': selectedJobRequestId(),
+          'bg-info-bg-dark text-info-text-light': !selectedJobRequestId()
+        }"
+        (click)="onSend(placementCell.placementCellId, placementCell.placementCellName)"
+      >
+        <i class="fa-solid fa-paper-plane"></i> Send Job Request
+      </button>
+    </div>
+    }
+  </div>
+</ng-container>
