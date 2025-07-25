@@ -1,6 +1,9 @@
 export type JobDrive = {
   jobDriveId: string;
-  recruiterId: string;
+  recruiter: {
+    recruiterId: string;
+    companyName: string;
+  };
   status: JobDriveStatus;
   driveDate: Date;
   createdAt: Date;

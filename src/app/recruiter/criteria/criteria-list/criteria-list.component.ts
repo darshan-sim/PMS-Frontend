@@ -81,7 +81,7 @@ export class CriteriaListComponent {
         .pipe(
           catchError(error => {
             return throwError(() => {
-              console.log(error.error.data);
+              console.log(error);
             });
           })
         )

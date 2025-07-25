@@ -26,14 +26,6 @@
       </p>
     </div>
 
-    <!-- Eligibility Criteria ID -->
-    <div>
-      <label class="block text-sm font-medium text-secondary">Eligibility Criteria ID</label>
-      <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
-        {{ jobDrive.jobRequest.eligibilityCriteriaId }}
-      </p>
-    </div>
-
     <!-- Created At -->
     <div>
       <label class="block text-sm font-medium text-secondary">Created At</label>
@@ -43,10 +35,17 @@
     </div>
 
     <!-- Recruiter ID -->
+
     <div>
-      <label class="block text-sm font-medium text-secondary">Recruiter ID</label>
+      <label class="block text-sm font-medium text-secondary">{{
+        role === 'placement_cell' ? 'Placement Cell' : 'Recruiter'
+      }}</label>
       <p class="px-3 py-1.5 rounded-md bg-white border border-gray-200 text-primary">
-        {{ jobDrive.recruiterId }}
+        {{
+          role === 'placement_cell'
+            ? jobDrive.placementCell.placementCellName
+            : jobDrive.recruiter.companyName
+        }}
       </p>
     </div>
 

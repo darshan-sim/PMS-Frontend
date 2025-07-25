@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { DriveService } from '../../../services/drive.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-drive-view',
@@ -22,6 +23,8 @@ import { DriveService } from '../../../services/drive.service';
 })
 export class DriveViewComponent {
   private driveService = inject(DriveService);
+  private authService = inject(AuthService);
+  user = this.authService.currentUser()
 
   jobDrive$ = this.driveService.jobDrive$;
 
@@ -37,6 +40,8 @@ export class DriveViewComponent {
 
   cancelEdit() {
     this.editMode = false;
-    // this.updatedDriveDate = null;
+  }
+  get role(){
+    return this.user?.role
   }
 }

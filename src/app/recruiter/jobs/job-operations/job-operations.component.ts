@@ -341,10 +341,12 @@ export class JobOperationsComponent {
         .updateJobRequest(this.jobRequestData.jobRequestId, jobRequest)
         .subscribe(res => {
           this.jobRequestData = res.data;
+          this.toastService.show(res.message, 'success')
           this.jobService.setMode(MODE.VIEW);
         });
     } else if (this.mode() === MODE.CREATE) {
       this.jobService.createJobRequest(jobRequest).subscribe(res => {
+        this.toastService.show(res.message, 'success')
         this.jobRequestData = res.data;
         this.jobService.setMode(MODE.VIEW);
       });

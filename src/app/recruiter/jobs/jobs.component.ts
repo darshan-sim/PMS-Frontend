@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommonPageLayoutComponent } from '../../shared/common-page-layout/common-page-layout.component';
 import { AsideSlotDirective } from '../../shared/directives/aside-slot.directive';
@@ -11,6 +11,7 @@ import { MODE } from '../../types/common.types';
 import { JobOperationsComponent } from './job-operations/job-operations.component';
 import { PostJobComponent } from './post-job/post-job.component';
 import { PostedJobComponent } from './posted-job/posted-job.component';
+import { ToastComponent } from "../../shared/components/toast/toast.component";
 
 @Component({
   selector: 'app-jobs',
@@ -25,7 +26,8 @@ import { PostedJobComponent } from './posted-job/posted-job.component';
     JobOperationsComponent,
     PostJobComponent,
     PostedJobComponent,
-  ],
+    ToastComponent
+],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css',
   styles: [],

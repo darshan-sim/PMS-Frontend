@@ -134,7 +134,7 @@
     </div>
 
     <div>
-      <p class="block text-sm/6 font-medium text-secondary mb-1">Student Placement Status</p>
+      <p class="block text-sm/6 font-medium text-secondary mb-1">Allow All Degree</p>
       <label class="inline-flex items-center cursor-pointer">
         @if (isEditMode) {
         <input type="checkbox" formControlName="allowAllDegrees" class="sr-only peer" />
@@ -154,7 +154,14 @@
     <!-- Degrees Selector -->
     @if (!allowAllDegreesControl.value) {
     <div class="space-y-2">
-      @if (isEditMode) {
+      @if(!isEditMode && !allowedDegreesControl.value){
+      <p
+        class="flex w-full rounded-md px-3 py-1.5 text-base text-primary bg-soft-white bg-opacity-50 outline-2 outline-soft-white hover:outline-secondary focus:outline-secondary focus:-outline-offset-2 focus:outline-2 hover:outline-2 placeholder:text-secondary/50 sm:text-sm/6 items-center"
+      >
+        Allowed Degree
+      </p>
+
+      } @if (isEditMode) {
       <app-dropdown-autocomplete-component
         [options]="degreeOptions"
         [placeholder]="'Add Degree...'"
